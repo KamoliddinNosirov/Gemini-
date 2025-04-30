@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import './Main.css'
 import { assets } from "../../assets/assets";
 import { Context } from "../../context/Context";
 
 const Main = () => {
 
-    const { onSent, recentPrompt, showResult, loading, resultData, setInput, input } = useContext(Context)
+    const {setPrevPrompts, recentPromt, onSent, showResult, loading, resultData, setInput, input } = useContext(Context)
+
 
     return (
         <div className="main">
@@ -43,8 +44,8 @@ const Main = () => {
                     : <div className="result">
                         <div className="result-title">
                             <img src={assets.user_icon} alt="" />
-                            {console.log(recentPrompt)}
-                            <p>{recentPrompt ? recentPrompt : "Name null"}</p>
+                            {/* {console.log(recentPrompt)} */}
+                            <p>{recentPromt}</p>
                         </div>
                         <div className="result-data">
                             <img src={assets.gemini_icon} alt="" />
@@ -53,28 +54,36 @@ const Main = () => {
                                     <hr />
                                     <hr />
                                     <hr />
-                                </div> 
+                                </div>
                                 : <p dangerouslySetInnerHTML={{ __html: resultData }}></p>
                             }
                         </div>
                     </div>
                 }
 
-                <div className="main-bottom">
-                    <div className="search-box">
-                        <input onChange={(e) => setInput(e.target.value)} value={input} type="text" placeholder="Enter a promt here" />
-                        <div>
-                            <img src={assets.gallery_icon} alt="" />
-                            <img src={assets.mic_icon} alt="" />
-                            <img onClick={() => onSent()} src={assets.send_icon} alt="" />
+                <form onSubmit={(e)=> {
+                    e.preventDefault()
+                    onSent()
+                    setPrevPrompts(prev => [...prev, input])
+                }} action="">
+                    <div className="main-bottom">
+                        <div className="search-box">
+                            <input onChange={(e) => {
+                                setInput(e.target.value)
+                            }} value={input} type="text" placeholder="Enter a promt here" />
+                            <div>
+                                <img src={assets.gallery_icon} alt="" />
+                                <img src={assets.mic_icon} alt="" />
+                                {input? <img src={assets.send_icon} alt="" /> : null}
+                            </div>
                         </div>
+                        <p className="bottom-info">
+                            Gemini may display inaccurater info, including about people, so double-check its responses. Your privacy and Gemini Apps
+                        </p>
                     </div>
-                    <p className="bottom-info">
-                        Gemini may display inaccurater info, including about people, so double-check its responses. Your privacy and Gemini Apps
-                    </p>
-                </div>
+                </form>
             </div>
-        </div>
+        </div >
     )
 }
 
