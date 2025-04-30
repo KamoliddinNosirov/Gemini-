@@ -14,7 +14,6 @@ const ContextProvider = (props) =>{
     
 
 const onSent = async (prompt) =>{
-
     setResultData("")
     setLoading(true)
     setShowResult(true)
@@ -23,7 +22,6 @@ const onSent = async (prompt) =>{
     setResultData(response)
     setLoading(false)
     setInput("")
-
 }
 
 
@@ -35,6 +33,7 @@ const onSent = async (prompt) =>{
         recentPromt,
         showResult,
         loading,
+        resultData,
         input,
         setInput
     }
