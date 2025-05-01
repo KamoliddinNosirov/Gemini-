@@ -3,7 +3,7 @@ import './Main.css'
 import { assets } from "../../assets/assets";
 import { Context } from "../../context/Context";
 
-const Main = () => {
+const Main = ({setOpenUserInfo, openUserInfo}) => {
 
     const {setPrevPrompts, recentPromt, onSent, showResult, loading, resultData, setInput, input } = useContext(Context)
 
@@ -12,7 +12,7 @@ const Main = () => {
         <div className="main">
             <div className="nav">
                 <p>Gemini</p>
-                <img src={assets.user_icon} alt="" />
+                <img style={{cursor: "pointer"}} onClick={()=>setOpenUserInfo(!openUserInfo)} src={assets.user_icon} alt="" />
             </div>
             <div className="main-container">
 
@@ -64,7 +64,6 @@ const Main = () => {
                 <form onSubmit={(e)=> {
                     e.preventDefault()
                     onSent()
-                    setPrevPrompts(prev => [...prev, input])
                 }} action="">
                     <div className="main-bottom">
                         <div className="search-box">
@@ -74,7 +73,7 @@ const Main = () => {
                             <div>
                                 <img src={assets.gallery_icon} alt="" />
                                 <img src={assets.mic_icon} alt="" />
-                                {input? <img src={assets.send_icon} alt="" /> : null}
+                                {input? <img onClick={()=>onSent()} src={assets.send_icon} alt="" /> : null}
                             </div>
                         </div>
                         <p className="bottom-info">

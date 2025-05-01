@@ -35,7 +35,7 @@ const Sidebar = () => {
                             return (
                                 <div onClick={()=>loadPromt(item)} key={index} className="recent-entry">
                                     <img src={assets.message_icon} alt="" />
-                                    <p>{item > 24 ? item : item?.slice(0, 24)}</p>
+                                    <p>{item?.slice(0, 24)}</p>
                                 </div>
                             )
                         })}
